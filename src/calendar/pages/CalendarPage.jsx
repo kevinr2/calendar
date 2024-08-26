@@ -8,24 +8,19 @@ import { getMessagesES } from "../../helpers/getMessages";
 import { CalendarEvent } from "../components/CalendarEvent";
 import { useState } from "react";
 import { CalendarModal } from "../components/CalendarModal";
+import { useUIStore } from "../../hooks/useUIStore";
+import { useCalendarStore } from "../../hooks/useCalendarStore";
+import { FabAddNew } from "../components/FabAddNew";
+import { FabDelete } from "../components/FabDelete";
 
 
-const events = [
-  {
-    title: "cumpleaños",
-    notes: "haque hacer el cumpleaños",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgcolor: "#fafafa",
-    user:{
-      name:'kevin Revelo'
-    }
-  },
-];
+
 
 export const CalendarPage = () => {
+  const {events,setActiveEvent} = useCalendarStore()
+  const{openDateModal}=useUIStore()
 
-  const [lastView, setLastView] = useState(localStorage.getItem('lastViewm')||'week')
+const [lastView, setLastView] = useState(localStorage.getItem('lastViewm')||'month')
 
 const eventStyleGetter= (event, start, end,isSelected)=>{
    const  style={
@@ -39,10 +34,12 @@ const eventStyleGetter= (event, start, end,isSelected)=>{
    }
 }
 const onDoubleClick = (event)=>{
-    console.log({doubleClick:event})
+    /* console.log({doubleClick:event}) */
+    openDateModal()
 }
 const onSelect= (event)=>{
-  console.log({click:event})
+ /*  console.log({click:event}) */
+ setActiveEvent(event)
 }
 const onViewChange = (event)=>{
   localStorage.setItem('lastView',event)
@@ -70,6 +67,8 @@ const onViewChange = (event)=>{
         onView={onViewChange}
       />
       <CalendarModal />
+      <FabAddNew />
+      <FabDelete />
     </>
   );
 };
