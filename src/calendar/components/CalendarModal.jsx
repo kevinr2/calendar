@@ -30,6 +30,7 @@ export const CalendarModal = () => {
   const [fromSubmitted, setFromSubmitted] = useState(false)
 
   const [formValues, setformValues] = useState({
+    id:'',
     title: "",
     notes: "",
     start: new Date(),
@@ -78,7 +79,6 @@ export const CalendarModal = () => {
     }
     if (formValues.title.length <= 0) return;
 
-    console.log(formValues);
     await startSavingEvent(formValues)
     closeDateModal()
     setFromSubmitted
